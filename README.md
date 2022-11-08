@@ -7,6 +7,9 @@ Monitore a velocidade das suas dívidas
 ```bash
 git clone https://github.com/TMTecnologia/endividometro.git
 cd endividometro
+npm install
+npx prisma db push
+npm run dev
 ```
 
 ## Licença
