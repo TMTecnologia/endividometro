@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
+    "commit": "cz",
     "dev": "next dev",
     "postinstall": "prisma generate",
     "lint": "next lint",
@@ -47,5 +48,10 @@
   },
   "ct3aMetadata": {
     "initVersion": "6.8.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
   }
 }
