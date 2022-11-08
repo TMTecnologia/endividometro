@@ -13,6 +13,8 @@ jobs:
     name: audit-ci
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Check for vulnerabilities
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v3
+
+      - name: 🚨 Check for vulnerabilities
         run: npx audit-ci@^6 --config ./audit-ci.jsonc
