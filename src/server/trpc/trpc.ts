@@ -1,4 +1,5 @@
-import { TRPCError, initTRPC } from '@trpc/server'
+/* eslint-disable-next-line sort-imports */
+import { initTRPC, TRPCError } from '@trpc/server'
 import superjson from 'superjson'
 
 import { type Context } from './context'
