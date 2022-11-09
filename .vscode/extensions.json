@@ -4,6 +4,7 @@
     "dbaeumer.vscode-eslint",
     "streetsidesoftware.code-spell-checker",
     "streetsidesoftware.code-spell-checker-portuguese-brazilian",
-    "Vtrois.gitmoji-vscode"
+    "seatonjiang.gitmoji-vscode",
+    "Prisma.prisma"
   ]
 }
