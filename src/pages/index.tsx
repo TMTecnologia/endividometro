@@ -1,7 +1,10 @@
+import { useCallback, useState } from 'react'
 import { type NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import { signIn, signOut, useSession } from 'next-auth/react'
+
+import { Message } from '@root/components'
 
 const LoginButton: React.FC = () => {
   const { data: sessionData } = useSession()
@@ -30,12 +33,32 @@ const LoginButton: React.FC = () => {
   )
 }
 
+function formatFeedback(feedback: string, index: number) {
+  if (!feedback) return <></>
+  if (feedback.startsWith('ERRO'))
+    return (
+      <Message key={`${feedback}${index}`} variant="error">
+        <span>{feedback}</span>
+      </Message>
+    )
+  return (
+    <Message key={`${feedback}${index}`} variant="success">
+      <span>{feedback}</span>
+    </Message>
+  )
+}
+
 const Home: NextPage = () => {
   const date = new Date()
   const { format: dateFormatter } = new Intl.DateTimeFormat('pt-Br', {
     month: 'long',
     year: '2-digit',
   })
+  const [feedbacks, setFeedbacks] = useState([] as string[])
+  const addFeedback = useCallback(
+    (feedback: string) => setFeedbacks((old) => [...old, feedback]),
+    [setFeedbacks]
+  )
 
   return (
     <>
@@ -45,7 +68,10 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <nav className="mx-2 mt-2 flex items-center justify-between">
-        <button className="btn-ghost btn">
+        <button
+          className="btn-ghost btn"
+          onClick={() => addFeedback('Em breve, criação de vários quadros')}
+        >
           <picture>
             <source
               srcSet="/menu-dark.svg"
@@ -64,7 +90,12 @@ const Home: NextPage = () => {
         <strong>{dateFormatter(date).toUpperCase()}</strong>
         <LoginButton />
       </nav>
-      <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4"></main>
+      <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
+        <div className="toast">
+          {/* TODO: (a11y) utilizar ul e li */}
+          {feedbacks.map((feedback, index) => formatFeedback(feedback, index))}
+        </div>
+      </main>
     </>
   )
 }
