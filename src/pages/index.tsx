@@ -1,10 +1,11 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { type NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import { signIn, signOut, useSession } from 'next-auth/react'
 
 import { Message } from '@root/components'
+import { trpc } from '@root/utils/trpc'
 
 const LoginButton: React.FC = () => {
   const { data: sessionData } = useSession()
@@ -49,16 +50,28 @@ function formatFeedback(feedback: string, index: number) {
 }
 
 const Home: NextPage = () => {
-  const date = new Date()
+  const date = useMemo(() => new Date(), [])
   const { format: dateFormatter } = new Intl.DateTimeFormat('pt-Br', {
     month: 'long',
     year: '2-digit',
+  })
+  const { format: dateTableFormatter } = new Intl.DateTimeFormat('pt-Br', {
+    day: '2-digit',
+    // month: '2-digit',
+  })
+  const { format: currencyFormatter } = new Intl.NumberFormat('pt-Br', {
+    style: 'currency',
+    currency: 'BRL',
   })
   const [feedbacks, setFeedbacks] = useState([] as string[])
   const addFeedback = useCallback(
     (feedback: string) => setFeedbacks((old) => [...old, feedback]),
     [setFeedbacks]
   )
+
+  const { data: allDebts } = trpc.debt.getAll.useQuery({
+    date,
+  })
 
   return (
     <>
