@@ -20,6 +20,14 @@ model Example {
   updatedAt DateTime @updatedAt
 }
 
+model Debt {
+  id          String   @id @default(cuid())
+  description String
+  startDate   DateTime @default(now())
+  endDate     DateTime @default(now())
+  value       Decimal // NOTE: valor da parcela
+}
+
 // Necessary for Next auth
 model Account {
   id                String  @id @default(cuid())
