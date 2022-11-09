@@ -10,8 +10,18 @@ const config = {
   reactStrictMode: true,
   swcMinify: true,
   i18n: {
-    locales: ['en'],
-    defaultLocale: 'en',
+    locales: ['pt-Br'],
+    defaultLocale: 'pt-Br',
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+        port: '',
+        pathname: '/a/**',
+      },
+    ],
   },
 }
 export default config
